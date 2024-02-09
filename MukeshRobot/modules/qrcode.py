@@ -22,25 +22,34 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE."""
+from pyrogram import filters
+from pyrogram.types import  Message
+from pyrogram.enums import ChatAction
+
+from .. import pbot as  Mukesh,BOT_USERNAME
 import requests
 
-from MukeshRobot import pbot
-from pyrogram import filters
 
+@Mukesh.on_message(filters.command("qrcode"))
+async def qrcode_(_, message: Message):
+    if message.reply_to_message:
+        text = message.reply_to_message.text
+    else:
+        text =message.text.split(None, 1)[1]
+    m =await message.reply_text( "`Please wait...,\n\nCreating your Qrcode ...`")
+    write = requests.get(f"https://mukesh-api.vercel.app/qrcode?query={text}").json()["results"]
 
-@pbot.on_message(filters.command("loveshayri"))
-
-async def love_shayri(b,m):
-    "dont remove this line \n credit  |n github : noob-mukesh"
-    love = requests.get("https://mukesh-api.vercel.app/loveshayri").json()["results"]    
-    await m.reply_text(love)
-          
-@pbot.on_message(filters.command("hateshayri"))
-async def hate_shayri(b,m):
-    "dont remove this line \n credit  |n github : noob-mukesh"
-    hate= requests.get("https://mukesh-api.vercel.app/hateshayri").json()["results"]    
-    await m.reply_text(hate)          
-__mod_name__="​​Sʜᴀʏʀɪ"
-__help__="""ꜱᴇɴᴅ ʀᴀɴᴅᴏᴍ ꜱʜᴀʏʀɪ
-❍ /loveshayri : ʟᴏᴠᴇ ꜱʜᴀʏʀɪ
-❍ /hateshayri : ʜᴀᴛᴇ ꜱʜᴀʏʀɪ"""
+    caption = f"""
+sᴜᴄᴇssғᴜʟʟʏ Gᴇɴᴇʀᴀᴛᴇᴅ Qʀᴄᴏᴅᴇ 💘
+✨ **Gᴇɴᴇʀᴀᴛᴇᴅ ʙʏ :** @{BOT_USERNAME}
+🥀 **ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {message.from_user.mention}
+"""
+    await m.delete()
+    await message.reply_photo(photo=write,caption=caption)
+# -----------CREDITS -----------
+# telegram : @legend_coder
+# github : noob-mukesh
+__mod_name__ = "Qʀᴄᴏᴅᴇ"
+__help__ = """
+ ➻ /qrcode : ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ǫʀᴄᴏᴅᴇ
+ """
